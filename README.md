@@ -59,6 +59,66 @@ Realiza o logout do usuário.
 
 <br>
 
+### Usuário
+
+#### GET /api/user
+
+Retorna o usuário autenticado.
+
+**Resposta de sucesso:**
+
+- `id` (integer): ID do usuário.
+- `name` (string): Nome do usuário.
+- `email` (string): Email do usuário.
+- Outros campos do usuário.
+
+#### PUT /api/user/{id}
+
+Atualiza as informações de um usuário específico.
+
+**Parâmetros:**
+
+- `id` (integer, obrigatório): ID do usuário a ser atualizado.
+- Corpo da requisição: JSON contendo os campos a serem atualizados.
+
+**Exemplo de corpo da requisição:**
+
+```json
+{
+    "name": "Jane Doe",
+    "email": "jane.doe@example.com"
+}
+```
+
+**Resposta de sucesso:**
+
+- `message` (string): Mensagem de sucesso.
+- `user` (objeto): Dados do usuário atualizado.
+
+**Resposta de erro:**
+
+- `error` (string): Mensagem de erro.
+- `message` (string): Detalhes do erro.
+
+#### DELETE /api/user/{id}
+
+Deleta um usuário específico.
+
+**Parâmetros:**
+
+- `id` (integer, obrigatório): ID do usuário a ser deletado.
+
+**Resposta de sucesso:**
+
+- `message` (string): Mensagem de sucesso.
+
+**Resposta de erro:**
+
+- `error` (string): Mensagem de erro.
+- `message` (string): Detalhes do erro.
+
+<br>
+
 ### Meetings
 
 #### GET /api/meetings
