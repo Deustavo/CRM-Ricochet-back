@@ -11,9 +11,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('meetings', MeetingController::class);
-    Route::put('/meetings/{id}', [MeetingController::class, 'update']);
-    // Route::delete('/meetings/{id}', [MeetingController::class, 'destroy']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [UserController::class, 'user']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
+    Route::delete('/user/{id}', [UserController::class, 'delete']);
 });
