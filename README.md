@@ -3,6 +3,8 @@
 
 Esse projeto é um desafio da empresa Ricochet 360 de criar um sistema CRM de gestão de reuniões.
 
+<br>
+
 ## Rotas da API
 
 ### Autenticação
@@ -116,7 +118,9 @@ Deleta uma reunião específica.
 - `message` (string): Mensagem de sucesso.
 - `status` (integer): Código de status HTTP.
 
+<br>
 <hr>
+<br>
 
 ## Instalação do projeto
 
