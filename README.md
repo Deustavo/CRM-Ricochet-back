@@ -1,5 +1,9 @@
 
-### Passo a passo
+# Desafio Ricochet 360 - Backend
+
+Esse projeto é um desafio da empresa Ricochet 360 de criar um sistema CRM de gestão de reuniões.
+
+## Instalação do projeto
 
 Suba os containers do projeto
 ```sh
@@ -24,6 +28,11 @@ composer install
 Gere a key do projeto Laravel
 ```sh
 php artisan key:generate
+```
+
+OPCIONAL: Gere o banco SQLite (caso não use o banco MySQL)
+```sh
+touch database/database.sqlite
 ```
 
 Rodar as migrations
