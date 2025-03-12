@@ -57,6 +57,8 @@ Realiza o logout do usuário.
 
 - `message` (string): Mensagem de sucesso.
 
+<br>
+
 ### Meetings
 
 #### GET /api/meetings
