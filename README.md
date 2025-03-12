@@ -116,7 +116,7 @@ Deleta uma reunião específica.
 - `message` (string): Mensagem de sucesso.
 - `status` (integer): Código de status HTTP.
 
-```
+<hr>
 
 ## Instalação do projeto
 
