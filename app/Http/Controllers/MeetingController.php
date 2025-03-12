@@ -16,16 +16,7 @@ class MeetingController extends Controller
         return Meeting::with([
             'user:id,name,email',
             'attendees:id,name,email',
-        ])->get([
-            'id',
-            'title',
-            'description',
-            'start_time',
-            'end_time',
-            'meeting_link',
-            'user',
-            'attendees',
-        ]);
+        ])->get();
     }
 
     public function store(Request $request)
@@ -60,15 +51,6 @@ class MeetingController extends Controller
         return $meeting->load([
             'user:id,name,email',
             'attendees:id,name,email'
-        ])->only([
-            'id',
-            'title',
-            'description',
-            'start_time',
-            'end_time',
-            'meeting_link',
-            'user',
-            'attendees',
         ]);
     }
 
