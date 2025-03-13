@@ -57,6 +57,20 @@ class MeetingController extends Controller
         ]);
     }
 
+    public function userMeetings()
+    {
+        $userId = Auth::id();
+
+        $meetings = Meeting::where('user_id', $userId)
+            ->orWhereHas('attendees', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->with(['user:id,name,email', 'attendees:id,name,email'])
+            ->get();
+
+        return response()->json($meetings);
+    }
+
     public function update(Request $request, Meeting $meeting)
     {
         $this->authorize('update', $meeting);
