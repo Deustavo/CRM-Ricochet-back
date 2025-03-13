@@ -6,6 +6,7 @@ use App\Models\Meeting;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use \Illuminate\Support\Facades\Auth;
+use App\Events\MeetingCreated;
 
 class MeetingController extends Controller
 {
@@ -43,6 +44,8 @@ class MeetingController extends Controller
             $meeting->attendees()->attach($request->attendees);
         }
 
+        // dd($meeting);
+        broadcast(new MeetingCreated($meeting));
         return response()->json($meeting->load('attendees'), 201);
     }
 

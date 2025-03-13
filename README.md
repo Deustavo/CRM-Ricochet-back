@@ -230,3 +230,9 @@ php artisan migrate
 
 Acesse o projeto
 [http://localhost:8000](http://localhost:8000)
+
+Executar fila do pusher
+
+```sh
+php artisan queue:work
+```
