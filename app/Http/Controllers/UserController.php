@@ -35,4 +35,14 @@ class UserController extends Controller
             return response()->json(['error' => 'User deletion failed', 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function getAllUsers()
+    {
+        try {
+            $users = User::all();
+            return response()->json(['users' => $users]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve users', 'message' => $e->getMessage()], 500);
+        }
+    }
 }
