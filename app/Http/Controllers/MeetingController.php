@@ -44,8 +44,12 @@ class MeetingController extends Controller
             $meeting->attendees()->attach($request->attendees);
         }
 
-        // dd($meeting);
-        broadcast(new MeetingCreated($meeting));
+        $meetinNotification = [
+            'title' => $meeting->title,
+            'attendees' => $request->attendees,
+        ];
+
+        broadcast(new MeetingCreated($meetinNotification));
         return response()->json($meeting->load('attendees'), 201);
     }
 
