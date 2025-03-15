@@ -51,7 +51,7 @@ class SendMeetingReminders extends Command
     {
         $now = Carbon::now();
         $start = $now->format('Y-m-d\TH:i');
-        $reminderTime = $now->copy()->addMinutes(5)->format('Y-m-d\TH:i');
+        $reminderTime = $now->copy()->addMinutes(1)->format('Y-m-d\TH:i');
 
         $meetings = Meeting::whereBetween('start_time', [$start, $reminderTime])->get();
         $attendees = [];
