@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Meeting;
 use App\Events\MeetingReminder;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SendMeetingReminders extends Command
 {
@@ -25,6 +25,24 @@ class SendMeetingReminders extends Command
     protected $description = 'Send reminders for meetings starting in 5 minutes';
 
     /**
+     * get the attendees for the meeting
+     * 
+     * @param Meeting $meeting
+     * @return Array
+     */
+    protected function getAttendees($meeting)
+    {
+        $attendees = DB::table('meeting_user')
+            ->join('users', 'meeting_user.user_id', '=', 'users.id')
+            ->where('meeting_user.meeting_id', $meeting->id)
+            ->select('users.id')
+            ->get()
+            ->pluck('id');
+
+        return $attendees;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return int
@@ -36,9 +54,17 @@ class SendMeetingReminders extends Command
         $reminderTime = $now->copy()->addMinutes(5)->format('Y-m-d\TH:i');
 
         $meetings = Meeting::whereBetween('start_time', [$start, $reminderTime])->get();
+        $attendees = [];
 
         foreach ($meetings as $meeting) {
-            event(new MeetingReminder($meeting));
+            $attendees = $this->getAttendees($meeting);
+            $meetingData = [
+                'id' => $meeting->id,
+                'title' => $meeting->title,
+                'start_time' => $meeting->start_time,
+                'attendees' => $attendees
+            ];
+            event(new MeetingReminder($meetingData));
         }
 
         return 0;
