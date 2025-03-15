@@ -13,8 +13,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('meetings', MeetingController::class);
     Route::get('/meetings/user/{id}', [MeetingController::class, 'userMeetings']);
     Route::get('/logout', [AuthController::class, 'logout']);
+
+    // User Routes
     Route::get('/user', [UserController::class, 'user']);
-    Route::put('/user/{id}', [UserController::class, 'update']);
-    Route::delete('/user/{id}', [UserController::class, 'delete']);
-    Route::get('/users', [UserController::class, 'getAllUsers']);
+    Route::get('/users', [UserController::class, 'getAllUsers'])->name('user.getAll');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/users/{id}', [UserController::class, 'delete'])->name('user.delete');
 });

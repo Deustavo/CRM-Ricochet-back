@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
@@ -18,9 +19,9 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->update($request->all());
 
-            return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+            return Response::json(['message' => 'User updated successfully', 'user' => $user]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'User update failed', 'message' => $e->getMessage()], 500);
+            return Response::json(['error' => 'User update failed', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -30,9 +31,9 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->delete();
 
-            return response()->json(['message' => 'User deleted successfully']);
+            return Response::json(['message' => 'User deleted successfully']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'User deletion failed', 'message' => $e->getMessage()], 500);
+            return Response::json(['error' => 'User deletion failed', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -40,9 +41,9 @@ class UserController extends Controller
     {
         try {
             $users = User::all();
-            return response()->json(['users' => $users]);
+            return Response::json(['users' => $users]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to retrieve users', 'message' => $e->getMessage()], 500);
+            return Response::json(['error' => 'Failed to retrieve users', 'message' => $e->getMessage()], 500);
         }
     }
 }
