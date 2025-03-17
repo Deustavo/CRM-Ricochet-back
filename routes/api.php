@@ -14,6 +14,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Meeting Routes
     Route::apiResource('meetings', MeetingController::class);
     Route::get('/meetings/user/{id}', [MeetingController::class, 'userMeetings']);
+    Route::put('/meetings/user/{id}', [MeetingController::class, 'update']);
+    Route::delete('/meetings/user/{id}', [MeetingController::class, 'destroy']);
 
     // User Routes
     Route::get('/user', [UserController::class, 'user']);
