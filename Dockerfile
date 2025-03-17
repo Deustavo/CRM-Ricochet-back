@@ -37,7 +37,7 @@ WORKDIR /var/www
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Copy Nginx config
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx/laravel.conf /etc/nginx/conf.d/laravel.conf
 
 # Copy Supervisor config
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
