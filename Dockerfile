@@ -22,6 +22,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 
+# Permissions
+RUN chmod -R 775 storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
+
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -37,7 +41,7 @@ WORKDIR /var/www
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Copy Nginx config
-COPY docker/nginx/laravel.conf /etc/nginx/conf.d/laravel.conf
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy Supervisor config
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
