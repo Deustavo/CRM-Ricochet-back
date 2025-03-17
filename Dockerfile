@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# set your user name, ex: user=carlos
+# Set your user name, ex: user=carlos
 ARG user=yourusername
 ARG uid=1000
 
@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    nginx \
+    supervisor
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -23,15 +25,10 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
-
 # Install redis
 RUN pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis
 
 # Set working directory
 WORKDIR /var/www
@@ -39,4 +36,14 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
-USER $user
+# Copy Nginx config
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Copy Supervisor config
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Expose ports
+EXPOSE 80
+
+# Start Nginx and PHP-FPM
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
